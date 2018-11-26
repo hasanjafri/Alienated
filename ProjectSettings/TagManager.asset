@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Foreground
   - Climbing
+  - Spikes
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Interactables
   - Background Elements
   - Climbing
-  - 
+  - Spikes
   - 
   - 
   - 
@@ -57,6 +58,9 @@ TagManager:
     locked: 0
   - name: Obstacles
     uniqueID: 1918580241
+    locked: 0
+  - name: Spikes
+    uniqueID: 255198475
     locked: 0
   - name: Player
     uniqueID: 1937178237
