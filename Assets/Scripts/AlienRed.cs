@@ -3,86 +3,106 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class AlienRed : MonoBehaviour {
+public class AlienRed : MonoBehaviour
+{
 
-    // Config params
-    [SerializeField] float runSpeed = 5f;
-    [SerializeField] float jumpSpeed = 5f;
-    [SerializeField] float climbSpeed = 5f;
-    [SerializeField] Vector2 deathKick = new Vector2(25f, 25f);
+  // Config params
+  [SerializeField] float runSpeed = 5f;
+  [SerializeField] float jumpSpeed = 5f;
+  [SerializeField] float climbSpeed = 5f;
+  [SerializeField] Vector2 deathKick = new Vector2(25f, 25f);
 
-    // State
-    bool isAlive = true;
-    bool isGrounded = true;
-    
-    // Cached references
-    Rigidbody2D myRigidBody;
-    Animator myAnimator;
-    CapsuleCollider2D myBodyCollider;
-    BoxCollider2D myFeetCollider;
-    float gravityScale;
-    float inputTimer;
+  // State
+  bool isAlive = true;
 
-	// Use this for initialization
-	void Start () {
-        myRigidBody = GetComponent<Rigidbody2D>();
-        myAnimator = GetComponent<Animator>();
-        myBodyCollider = GetComponent<CapsuleCollider2D>();
-        myFeetCollider = GetComponent<BoxCollider2D>();
-        gravityScale = myRigidBody.gravityScale;
-        inputTimer = 0;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (!isAlive)
-        {
-            return;
-        }
-        else
-        {
-            Run();
-            ClimbLadder();
-            Jump();
-            Die();
-            FlipSprite();
-            Idling();
-        }
-    }
+  // Cached references
+  Rigidbody2D myRigidBody;
+  Animator myAnimator;
+  CapsuleCollider2D myBodyCollider;
+  BoxCollider2D myFeetCollider;
+  float gravityScale;
+  float inputTimer;
 
-    private void Idling()
+  // Use this for initialization
+  void Start()
+  {
+    myRigidBody = GetComponent<Rigidbody2D>();
+    myAnimator = GetComponent<Animator>();
+    myBodyCollider = GetComponent<CapsuleCollider2D>();
+    myFeetCollider = GetComponent<BoxCollider2D>();
+    gravityScale = myRigidBody.gravityScale;
+    inputTimer = 0;
+  }
+
+  // Update is called once per frame
+  void Update()
+  {
+    if (!isAlive)
     {
-        if (myAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash != 1056690432)
-        {
-            return;
-        }
-
-        if (!Input.anyKey)
-        {
-            inputTimer += Time.deltaTime;
-        }
-        else
-        {
-            inputTimer = 0;
-        }
-
-        if (inputTimer >= 5f)
-        {
-            myAnimator.SetBool("Standing", false);
-            inputTimer = 0;
-        }
+      return;
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    else
     {
-        if (collision.gameObject.tag == "Foreground")
-        {
-            isGrounded = true;
-            myAnimator.SetBool("Jumping", false);
-        }
+      Run();
+      ClimbLadder();
+      Jump();
+      Die();
+      FlipSprite();
+      Idling();
+    }
+  }
+
+  private void Idling()
+  {
+    if (myAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash != 1991636315)
+    {
+      //print(myAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash);
+      return;
     }
 
-    private void Run()
+    if (!Input.anyKey)
+    {
+      inputTimer += Time.deltaTime;
+    }
+    else
+    {
+      inputTimer = 0;
+    }
+
+    if (inputTimer >= 5f)
+    {
+      myAnimator.SetBool("Standing", false);
+      inputTimer = 0;
+    }
+  }
+
+  private void OnCollisionEnter2D(Collision2D collision)
+  {
+    if (collision.gameObject.tag == "Foreground")
+    {
+      myAnimator.SetBool("Jumping", false);
+    }
+  }
+
+  private void OnTriggerEnter2D(Collider2D collision)
+  {
+    if (collision.gameObject.tag == "Climbing")
+    {
+      myAnimator.SetBool("Jumping", false);
+      myAnimator.SetBool("Climbing", true);
+    }
+  }
+
+  private void OnTriggerExit2D(Collider2D collision)
+  {
+    if (collision.gameObject.tag == "Climbing" && !myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Foreground")))
+    {
+      myAnimator.SetBool("Climbing", false);
+      myAnimator.SetBool("Jumping", true);
+    }
+  }
+
+  private void Run()
     {
         float controlThrow = CrossPlatformInputManager.GetAxis("Horizontal"); // value is between -1 to +1
         Vector2 playerVelocity = new Vector2((controlThrow * runSpeed), myRigidBody.velocity.y);
@@ -120,16 +140,20 @@ public class AlienRed : MonoBehaviour {
 
     private void Jump()
     {
+        if (myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Climbing")))
+        {
+          return;
+        }
+
         if (!myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Foreground")))
         {
             return;
         }
 
-        if (CrossPlatformInputManager.GetButtonDown("Jump") && isGrounded)
+        if (CrossPlatformInputManager.GetButtonDown("Jump"))
         {
             Vector2 jumpVelocity = new Vector2(0f, jumpSpeed);
             myRigidBody.velocity += jumpVelocity;
-            isGrounded = false;
             myAnimator.SetBool("Jumping", true);
         }
     }

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Foreground
+  - Climbing
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Obstacles
   - Interactables
   - Background Elements
-  - 
+  - Climbing
   - 
   - 
   - 
@@ -47,6 +48,9 @@ TagManager:
     locked: 0
   - name: Background Elements
     uniqueID: 3731694039
+    locked: 0
+  - name: Climbing
+    uniqueID: 3568778367
     locked: 0
   - name: Enemy
     uniqueID: 1667629723
