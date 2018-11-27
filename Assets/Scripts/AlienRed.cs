@@ -11,6 +11,9 @@ public class AlienRed : MonoBehaviour
   [SerializeField] float jumpSpeed = 5f;
   [SerializeField] float climbSpeed = 5f;
   [SerializeField] Vector2 deathKick = new Vector2(25f, 25f);
+  [SerializeField] GameObject fireballRight, fireballLeft;
+  [SerializeField] float fireRate = 0.5f;
+    
 
   // State
   bool isAlive = true;
@@ -22,6 +25,8 @@ public class AlienRed : MonoBehaviour
   BoxCollider2D myFeetCollider;
   float gravityScale;
   float inputTimer;
+  Vector2 fireballPos;
+  float nextFire = 0.0f;
 
   // Use this for initialization
   void Start()
@@ -44,6 +49,7 @@ public class AlienRed : MonoBehaviour
     else
     {
       Run();
+      fireBullet();
       ClimbLadder();
       Jump();
       FlipSprite();
@@ -119,6 +125,39 @@ public class AlienRed : MonoBehaviour
             myAnimator.SetBool("Running", false);
             myAnimator.SetBool("Standing", true);
         }
+    }
+
+    private void fireBullet()
+    {
+        if (CrossPlatformInputManager.GetButtonDown("Fire1") && Time.time > nextFire)
+        {
+            nextFire = Time.time + fireRate;
+            fire();
+        }
+    }
+
+    void fire()
+    {
+        if (myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Climbing")))
+        {
+            return;
+        }
+
+        fireballPos = transform.position;
+        if (isFacingRight())
+        {
+            fireballPos += new Vector2(+1f, 0f);
+            Instantiate(fireballRight, fireballPos, Quaternion.identity);
+        } else
+        {
+            fireballPos += new Vector2(-1f, 0f);
+            Instantiate(fireballLeft, fireballPos, Quaternion.identity);
+        }
+    }
+
+    bool isFacingRight()
+    {
+        return transform.localScale.x > 0;
     }
 
     private void ClimbLadder()

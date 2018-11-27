@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 114641629603112944}
   m_Layer: 11
   m_Name: Spider
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
+  blood: {fileID: 1996121103235118, guid: eeadfcb70300d13499fa97b38cf1b728, type: 2}
 --- !u!212 &212409060131869810
 SpriteRenderer:
   m_ObjectHideFlags: 1

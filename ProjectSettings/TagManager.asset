@@ -7,6 +7,8 @@ TagManager:
   - Foreground
   - Climbing
   - Spikes
+  - Fireball
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -25,7 +27,7 @@ TagManager:
   - Background Elements
   - Climbing
   - Spikes
-  - 
+  - Fireball
   - 
   - 
   - 
@@ -62,6 +64,9 @@ TagManager:
   - name: Spikes
     uniqueID: 255198475
     locked: 0
+  - name: Switch
+    uniqueID: 2491918383
+    locked: 0
   - name: Player
     uniqueID: 1937178237
     locked: 0
@@ -70,4 +75,7 @@ TagManager:
     locked: 0
   - name: Interactables
     uniqueID: 854256413
+    locked: 0
+  - name: Fireball
+    uniqueID: 3168767959
     locked: 0

@@ -6,6 +6,7 @@ using UnityEngine;
 public class Spider : MonoBehaviour {
 
     [SerializeField] float moveSpeed = 1f;
+    [SerializeField] GameObject blood;
 
     Rigidbody2D myRigidBody;
 
@@ -26,6 +27,14 @@ public class Spider : MonoBehaviour {
         }
         
 	}
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Fireball")
+        {
+            Instantiate(blood, transform.position, Quaternion.identity);
+        }
+    }
 
     bool isFacingLeft()
     {
