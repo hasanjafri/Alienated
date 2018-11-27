@@ -7,15 +7,16 @@ public class FallingSpikes : MonoBehaviour {
     Rigidbody2D myRigidBody;
 
 	// Use this for initialization
-	void Start () {
-		myRigidBody = GetComponent<Rigidbody2D>();
+	void Start ()
+    {
+          myRigidBody = GetComponent<Rigidbody2D>();
 	}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-      if (collision.gameObject.tag == "Player")
-      {
-        myRigidBody.isKinematic = false;
-      }
+          if (collision.gameObject.tag == "Player")
+          {
+            myRigidBody.isKinematic = false;
+          }
     }
 }

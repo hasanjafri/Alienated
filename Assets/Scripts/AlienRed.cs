@@ -46,7 +46,6 @@ public class AlienRed : MonoBehaviour
       Run();
       ClimbLadder();
       Jump();
-      Die();
       FlipSprite();
       Idling();
     }
@@ -82,6 +81,8 @@ public class AlienRed : MonoBehaviour
     {
       myAnimator.SetBool("Jumping", false);
     }
+
+    Die();
   }
 
   private void OnTriggerEnter2D(Collider2D collision)
@@ -160,7 +161,7 @@ public class AlienRed : MonoBehaviour
 
     private void Die()
     {
-        if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy", "Obstacles")))
+        if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy", "Obstacles", "Spikes")))
         {
             isAlive = false;
             myAnimator.SetTrigger("Dying");
