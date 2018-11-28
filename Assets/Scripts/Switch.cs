@@ -7,6 +7,8 @@ public class Switch : MonoBehaviour {
     [SerializeField] AudioClip switchSound;
     [SerializeField] Sprite switchOnSprite;
     [SerializeField] Sprite normalSprite;
+    [SerializeField] float activeTimer;
+    [SerializeField] Gem connectedGem;
 
     bool isSwitchedOn;
     float switchedOnTimer;
@@ -28,10 +30,11 @@ public class Switch : MonoBehaviour {
             switchedOnTimer = 0;
         }
 
-        if (switchedOnTimer > 5f)
+        if (switchedOnTimer > activeTimer)
         {
             GetComponent<SpriteRenderer>().sprite = normalSprite;
             isSwitchedOn = false;
+            connectedGem.Disappear();
         }
 	}
 
@@ -47,5 +50,14 @@ public class Switch : MonoBehaviour {
     {
         GetComponent<SpriteRenderer>().sprite = switchOnSprite;
         isSwitchedOn = true;
+        connectedGem.Appear();
+    }
+
+    public void Disable()
+    {
+        if (isSwitchedOn)
+        {
+            isSwitchedOn = false;
+        }
     }
 }

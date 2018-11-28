@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114115035712409192}
   m_Layer: 13
   m_Name: Switch
-  m_TagString: Untagged
+  m_TagString: Foreground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -118,6 +118,8 @@ MonoBehaviour:
   switchSound: {fileID: 0}
   switchOnSprite: {fileID: 21300008, guid: aa84f1669d7074a7b8db055ee7d5376d, type: 3}
   normalSprite: {fileID: 21300006, guid: aa84f1669d7074a7b8db055ee7d5376d, type: 3}
+  activeTimer: 5
+  connectedGem: {fileID: 0}
 --- !u!212 &212784302255431838
 SpriteRenderer:
   m_ObjectHideFlags: 1
