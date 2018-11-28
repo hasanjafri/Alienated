@@ -13,6 +13,7 @@ public class AlienRed : MonoBehaviour
   [SerializeField] Vector2 deathKick = new Vector2(25f, 25f);
   [SerializeField] GameObject fireballRight, fireballLeft;
   [SerializeField] float fireRate = 0.5f;
+  [SerializeField] float jumpBoost = 10f;
     
 
   // State
@@ -87,6 +88,12 @@ public class AlienRed : MonoBehaviour
     {
       myAnimator.SetBool("Jumping", false);
     }
+
+    if (collision.gameObject.tag == "Springboard")
+        {
+            myRigidBody.AddForce(Vector2.up * jumpBoost);
+            myAnimator.SetBool("Jumping", true);
+        }
 
     Die();
   }
