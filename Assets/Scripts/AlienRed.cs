@@ -192,7 +192,7 @@ public class AlienRed : MonoBehaviour
           return;
         }
 
-        if (!myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Foreground")))
+        if (!myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Foreground", "Interactables")))
         {
             return;
         }
@@ -210,8 +210,10 @@ public class AlienRed : MonoBehaviour
         if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy", "Obstacles", "Spikes")))
         {
             isAlive = false;
+            //myBodyCollider.enabled = false;
+            //myFeetCollider.enabled = false;
             myAnimator.SetTrigger("Dying");
-            GetComponent<Rigidbody2D>().velocity = deathKick;
+            myRigidBody.velocity = deathKick;
             //FindObjectOfType<GameSession>().ProcessPlayerDeath();
         }
     }
