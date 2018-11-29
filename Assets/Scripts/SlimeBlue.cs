@@ -20,7 +20,8 @@ public class SlimeBlue : MonoBehaviour {
         healthPoints = transform.childCount;
         mySpriteRenderer = GetComponent<SpriteRenderer>();
         disableHP();
-	}
+        hpTimer = 0;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -29,12 +30,10 @@ public class SlimeBlue : MonoBehaviour {
             if (isFacingLeft())
             {
                 myRigidBody.velocity = new Vector2(-moveSpeed, 0f);
-                print(healthPoints);
             }
             else
             {
                 myRigidBody.velocity = new Vector2(moveSpeed, 0f);
-                print(healthPoints);
             }
 
             if (hpEnabled)
@@ -45,6 +44,7 @@ public class SlimeBlue : MonoBehaviour {
             if (hpTimer > 2f)
             {
                 disableHP();
+                hpTimer = 0;
             }
         }
         else
@@ -62,7 +62,6 @@ public class SlimeBlue : MonoBehaviour {
             transform.GetChild(x).gameObject.SetActive(false);
         }
         hpEnabled = false;
-        hpTimer = 0;
     }
 
     private void showHP()
