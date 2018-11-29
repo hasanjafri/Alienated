@@ -9,6 +9,7 @@ public class Door : MonoBehaviour {
     [SerializeField] Sprite doorOpenSprite;
     [SerializeField] float LevelLoadDelay = 2f;
     [SerializeField] float LevelExitSloMoRatio = 0.2f;
+    [SerializeField] int gemsToCollect;
 
     BoxCollider2D myBoxCollider;
     bool isOpen;
@@ -21,7 +22,11 @@ public class Door : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (gemsToCollect == 0)
+        {
+            myBoxCollider.enabled = false;
+            GetComponent<SpriteRenderer>().sprite = doorOpenSprite;
+        }
 	}
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -30,6 +35,16 @@ public class Door : MonoBehaviour {
         {
             StartCoroutine(LoadNextLevel());
         }
+    }
+
+    public void CountGems()
+    {
+        gemsToCollect++;
+    }
+
+    public void GemCollected()
+    {
+        gemsToCollect--;
     }
 
     IEnumerator LoadNextLevel()

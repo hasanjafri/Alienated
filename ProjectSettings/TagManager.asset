@@ -11,6 +11,7 @@ TagManager:
   - Enemy
   - Springboard
   - Door
+  - Gem
   layers:
   - Default
   - TransparentFX

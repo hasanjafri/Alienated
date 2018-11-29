@@ -7,10 +7,22 @@ public class Gem : MonoBehaviour {
     [SerializeField] AudioClip coinPickupSound;
     [SerializeField] Switch connectedSwitch;
 
+    Door door;
+
     private void Start()
     {
         GetComponent<BoxCollider2D>().enabled = false;
         GetComponent<SpriteRenderer>().enabled = false;
+        countGemsToCollect();
+    }
+
+    private void countGemsToCollect()
+    {
+        door = FindObjectOfType<Door>();
+        if (tag == "Gem")
+        {
+            door.CountGems();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -19,6 +31,7 @@ public class Gem : MonoBehaviour {
         {
             Destroy(gameObject);
             connectedSwitch.Disable();
+            door.GemCollected();
         }
     }
 
