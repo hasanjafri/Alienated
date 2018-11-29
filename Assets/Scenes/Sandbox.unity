@@ -314,6 +314,7 @@ GameObject:
   - component: {fileID: 713379809}
   - component: {fileID: 713379811}
   - component: {fileID: 713379812}
+  - component: {fileID: 713379813}
   m_Layer: 13
   m_Name: Door
   m_TagString: Door
@@ -438,6 +439,21 @@ PolygonCollider2D:
       - {x: 0.3619082, y: 0.33758545}
       - {x: 0.33295977, y: 0.43273354}
       - {x: 0.26808643, y: 0.5046387}
+--- !u!114 &713379813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 713379808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c8951b05bfd73648ae192c0c7738557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalDoorSprite: {fileID: 0}
+  doorOpenSprite: {fileID: 0}
+  LevelLoadDelay: 2
+  LevelExitSloMoRatio: 0.2
 --- !u!4 &829080716 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4226297401445910, guid: 81f060276816548a5a918c2622ac107b,
