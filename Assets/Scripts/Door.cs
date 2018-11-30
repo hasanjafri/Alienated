@@ -24,6 +24,7 @@ public class Door : MonoBehaviour {
 	void Update () {
 		if (gemsToCollect == 0)
         {
+            isOpen = true;
             myBoxCollider.enabled = false;
             GetComponent<SpriteRenderer>().sprite = doorOpenSprite;
         }
@@ -33,7 +34,10 @@ public class Door : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
-            StartCoroutine(LoadNextLevel());
+            if (isOpen)
+            {
+                StartCoroutine(LoadNextLevel());
+            }
         }
     }
 
