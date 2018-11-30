@@ -19,15 +19,15 @@ public class SlimeBlue : MonoBehaviour {
         myRigidBody = GetComponent<Rigidbody2D>();
         healthPoints = transform.childCount;
         mySpriteRenderer = GetComponent<SpriteRenderer>();
-        disableHP();
+        DisableHP();
         hpTimer = 0;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (isAlive())
+        if (IsAlive())
         {
-            if (isFacingLeft())
+            if (IsFacingLeft())
             {
                 myRigidBody.velocity = new Vector2(-moveSpeed, 0f);
             }
@@ -43,7 +43,7 @@ public class SlimeBlue : MonoBehaviour {
 
             if (hpTimer > 2f)
             {
-                disableHP();
+                DisableHP();
                 hpTimer = 0;
             }
         }
@@ -55,22 +55,28 @@ public class SlimeBlue : MonoBehaviour {
         }
 	}
 
-    private void disableHP()
+    private void DisableHP()
     {
-        for (int x = 0; x < healthPoints; x++)
+        if (healthPoints > 0)
         {
-            transform.GetChild(x).gameObject.SetActive(false);
+            for (int x = 0; x < healthPoints; x++)
+            {
+                transform.GetChild(x).gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            }
+            hpEnabled = false;
         }
-        hpEnabled = false;
     }
 
-    private void showHP()
+    private void ShowHP()
     {
-        for (int x = 0; x < healthPoints; x++)
+        if (healthPoints > 0)
         {
-            transform.GetChild(x).gameObject.SetActive(true);
+            for (int x = 0; x < healthPoints; x++)
+            {
+                transform.GetChild(x).gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            }
+            hpEnabled = true;
         }
-        hpEnabled = true;
     }
 
     IEnumerator FadeOut()
@@ -90,7 +96,7 @@ public class SlimeBlue : MonoBehaviour {
         StartCoroutine(FadeOut());
     }
 
-    private bool isAlive()
+    private bool IsAlive()
     {
         return healthPoints > 0;
     }
@@ -100,12 +106,12 @@ public class SlimeBlue : MonoBehaviour {
         if (collision.gameObject.tag == "Fireball")
         {
             Instantiate(blood, transform.position, Quaternion.identity);
-            handleDamage();
-            showHP();
+            HandleDamage();
+            ShowHP();
         }
     }
 
-    private void handleDamage()
+    private void HandleDamage()
     {
         if (healthPoints > 0)
         {
@@ -114,7 +120,7 @@ public class SlimeBlue : MonoBehaviour {
         }
     }
 
-    bool isFacingLeft()
+    bool IsFacingLeft()
     {
         return transform.localScale.x < 0;
     }
